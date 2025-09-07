@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="tr" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iOS Cihazlar - Hoş Geldiniz</title>
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center min-vh-100 align-items-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="text-center mb-4">
+                    <div class="device-icon mb-3 ios-theme">
+                        <i class="fab fa-apple fa-5x text-info"></i>
+                    </div>
+                    <h1 class="display-4 mb-3">iOS'e Hoş Geldiniz!</h1>
+                    <p class="lead">iPhone veya iPad'iniz başarıyla tespit edildi.</p>
+                </div>
+
+                <!-- Cihaz Bilgileri Kartı -->
+                <div class="card border-info mt-4">
+                    <div class="card-header bg-info bg-opacity-10">
+                        <h6 class="mb-0 text-info"><i class="fas fa-mobile-alt me-2"></i>Cihaz Bilgileri</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <small class="text-muted">İşletim Sistemi:</small>
+                                <div id="os-info" class="fw-bold text-info">-</div>
+                            </div>
+                            <div class="col-md-6">
+                                <small class="text-muted">Tarayıcı:</small>
+                                <div id="browser-info" class="fw-bold text-info">-</div>
+                            </div>
+                            <div class="col-md-6">
+                                <small class="text-muted">Ekran Çözünürlüğü:</small>
+                                <div id="screen-info" class="fw-bold text-info">-</div>
+                            </div>
+                            <div class="col-md-6">
+                                <small class="text-muted">Dil:</small>
+                                <div id="language-info" class="fw-bold text-info">-</div>
+                            </div>
+                            <div class="col-md-6">
+                                <small class="text-muted">IP Adresi:</small>
+                                <div id="ip-info" class="fw-bold text-info">-</div>
+                            </div>
+                            <div class="col-md-6">
+                                <small class="text-muted">Zaman Dilimi:</small>
+                                <div id="timezone-info" class="fw-bold text-info">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="yonlendir.html" class="btn btn-outline-info">
+                        <i class="fas fa-home me-1"></i>Ana Sayfa
+                    </a>
+                </div>
+
+                <div class="text-center mt-3">
+                    <small class="text-muted">
+                        <i class="fas fa-clock me-1"></i>
+                        Son erişim: <span id="current-time"></span>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Şu anki zamanı göster
+        document.getElementById('current-time').textContent = new Date().toLocaleString('tr-TR');
+        
+        // Cihaz bilgilerini al ve göster
+        function getDeviceInfo() {
+            // İşletim sistemi tespiti
+            const userAgent = navigator.userAgent;
+            let os = 'Bilinmeyen';
+            if (/iPhone/i.test(userAgent)) {
+                const version = userAgent.match(/OS (\d+_\d+)/);
+                os = version ? `iOS ${version[1].replace('_', '.')}` : 'iOS';
+            } else if (/iPad/i.test(userAgent)) {
+                os = 'iPadOS';
+            } else if (/iPod/i.test(userAgent)) {
+                os = 'iOS (iPod)';
+            } else if (/Mac/i.test(userAgent)) {
+                os = 'macOS';
+            } else if (/Windows/i.test(userAgent)) {
+                os = 'Windows';
+            }
+
+            // Tarayıcı tespiti
+            let browser = 'Bilinmeyen';
+            if (/Safari/i.test(userAgent) && !/Chrome/i.test(userAgent)) {
+                browser = 'Safari';
+            } else if (/Chrome/i.test(userAgent)) {
+                browser = 'Chrome';
+            } else if (/Firefox/i.test(userAgent)) {
+                browser = 'Firefox';
+            } else if (/Edge/i.test(userAgent)) {
+                browser = 'Edge';
+            }
+
+            // Zaman dilimi
+            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+            // Bilgileri güncelle
+            document.getElementById('os-info').textContent = os;
+            document.getElementById('browser-info').textContent = browser;
+            document.getElementById('screen-info').textContent = `${screen.width} x ${screen.height}`;
+            document.getElementById('language-info').textContent = navigator.language || 'tr';
+            document.getElementById('timezone-info').textContent = timezone;
+            
+            // IP adresini al
+            getIPAddress();
+        }
+
+        // IP adresini almak için harici API kullan
+        async function getIPAddress() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                document.getElementById('ip-info').textContent = data.ip;
+            } catch (error) {
+                document.getElementById('ip-info').textContent = 'Alınamadı';
+            }
+        }
+
+        // Sayfa yüklendiğinde cihaz bilgilerini al
+        getDeviceInfo();
+
+        // iOS özel animasyonlar
+        document.querySelector('.ios-theme i').addEventListener('click', function() {
+            this.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 200);
+        });
+
+    </script>
+</body>
+</html>

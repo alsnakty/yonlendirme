@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="tr" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diğer Cihazlar - Hoş Geldiniz</title>
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center min-vh-100 align-items-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="text-center mb-4">
+                    <div class="device-icon mb-3 other-theme">
+                        <i class="fas fa-desktop fa-4x text-secondary me-2"></i>
+                        <i class="fas fa-laptop fa-3x text-secondary me-2"></i>
+                        <i class="fas fa-tablet-alt fa-3x text-secondary"></i>
+                    </div>
+                    <h1 class="display-4 mb-3">Evrensel Erişim</h1>
+                    <p class="lead">Cihazınız tanımlandı ve evrensel içeriğe yönlendirildiniz.</p>
+                </div>
+
+
+
+                <div class="text-center mt-4">
+                    <a href="yonlendir.html" class="btn btn-outline-secondary me-2">
+                        <i class="fas fa-home me-1"></i>Ana Sayfa
+                    </a>
+                    <button onclick="refreshPage()" class="btn btn-secondary">
+                        <i class="fas fa-sync-alt me-1"></i>Yeniden Algıla
+                    </button>
+                </div>
+
+                <div class="card border-secondary mt-4">
+                    <div class="card-header bg-secondary bg-opacity-10">
+                        <h6 class="mb-0 text-secondary"><i class="fas fa-desktop me-2"></i>Detaylı Cihaz Bilgileri</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <small class="text-muted">İşletim Sistemi:</small>
+                                <div id="os-info" class="fw-bold text-secondary">-</div>
+                            </div>
+                            <div class="col-md-4">
+                                <small class="text-muted">Tarayıcı:</small>
+                                <div id="browser-info" class="fw-bold text-secondary">-</div>
+                            </div>
+                            <div class="col-md-4">
+                                <small class="text-muted">Platform:</small>
+                                <div id="platform-info" class="fw-bold text-secondary">-</div>
+                            </div>
+                            <div class="col-md-4">
+                                <small class="text-muted">Ekran Çözünürlüğü:</small>
+                                <div id="screen-info" class="fw-bold text-secondary">-</div>
+                            </div>
+                            <div class="col-md-4">
+                                <small class="text-muted">Dil:</small>
+                                <div id="language-info" class="fw-bold text-secondary">-</div>
+                            </div>
+                            <div class="col-md-4">
+                                <small class="text-muted">Zaman Dilimi:</small>
+                                <div id="timezone-info" class="fw-bold text-secondary">-</div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <small class="text-muted">User Agent:</small>
+                            <div id="user-agent" class="small text-break font-monospace">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-3">
+                    <small class="text-muted">
+                        <i class="fas fa-clock me-1"></i>
+                        Son erişim: <span id="current-time"></span>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Şu anki zamanı göster
+        document.getElementById('current-time').textContent = new Date().toLocaleString('tr-TR');
+        
+        // Detaylı cihaz bilgilerini al ve göster
+        function getDetailedDeviceInfo() {
+            // İşletim sistemi tespiti
+            const userAgent = navigator.userAgent;
+            let os = 'Bilinmeyen';
+            if (/Windows NT 10/i.test(userAgent)) {
+                os = 'Windows 10/11';
+            } else if (/Windows NT 6.3/i.test(userAgent)) {
+                os = 'Windows 8.1';
+            } else if (/Windows NT 6.2/i.test(userAgent)) {
+                os = 'Windows 8';
+            } else if (/Windows NT 6.1/i.test(userAgent)) {
+                os = 'Windows 7';
+            } else if (/Windows/i.test(userAgent)) {
+                os = 'Windows';
+            } else if (/Mac OS X (\d+_\d+)/.test(userAgent)) {
+                const match = userAgent.match(/Mac OS X (\d+_\d+)/);
+                os = `macOS ${match[1].replace('_', '.')}`;
+            } else if (/Mac/i.test(userAgent)) {
+                os = 'macOS';
+            } else if (/Linux/i.test(userAgent)) {
+                os = 'Linux';
+            }
+
+            // Tarayıcı tespiti (versiyonlu)
+            let browser = 'Bilinmeyen';
+            if (/Chrome\/(\d+)/.test(userAgent) && !/Edge/.test(userAgent)) {
+                const version = userAgent.match(/Chrome\/(\d+)/)[1];
+                browser = `Chrome ${version}`;
+            } else if (/Firefox\/(\d+)/.test(userAgent)) {
+                const version = userAgent.match(/Firefox\/(\d+)/)[1];
+                browser = `Firefox ${version}`;
+            } else if (/Safari\/(\d+)/.test(userAgent) && !/Chrome/.test(userAgent)) {
+                browser = 'Safari';
+            } else if (/Edg\/(\d+)/.test(userAgent)) {
+                const version = userAgent.match(/Edg\/(\d+)/)[1];
+                browser = `Edge ${version}`;
+            }
+
+            // Zaman dilimi
+            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+            // Bilgileri güncelle
+            document.getElementById('os-info').textContent = os;
+            document.getElementById('browser-info').textContent = browser;
+            document.getElementById('platform-info').textContent = navigator.platform;
+            document.getElementById('screen-info').textContent = `${screen.width} x ${screen.height}`;
+            document.getElementById('language-info').textContent = navigator.language || 'tr';
+            document.getElementById('timezone-info').textContent = timezone;
+            document.getElementById('user-agent').textContent = navigator.userAgent;
+        }
+
+        // Sayfa yüklendiğinde cihaz bilgilerini al
+        getDetailedDeviceInfo();
+        
+        // Sayfa yenileme
+        function refreshPage() {
+            window.location.href = 'yonlendir.html';
+        }
+        
+        
+        // Cihaz ikonları animasyonu
+        document.querySelector('.other-theme').addEventListener('click', function() {
+            const icons = this.querySelectorAll('i');
+            icons.forEach((icon, index) => {
+                setTimeout(() => {
+                    icon.style.transform = 'scale(1.2)';
+                    setTimeout(() => {
+                        icon.style.transform = 'scale(1)';
+                    }, 200);
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

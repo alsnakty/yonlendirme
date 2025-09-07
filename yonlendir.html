@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="tr" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cihaz Yönlendirme - QR Kod Erişimi</title>
+    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center min-vh-100 align-items-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="text-center mb-4">
+                    <div class="device-icon mb-3">
+                        <i class="fas fa-mobile-alt fa-4x text-primary"></i>
+                    </div>
+                    <h1 class="display-5 mb-3">Cihazınız Algılanıyor...</h1>
+                    <p class="lead text-muted">Lütfen bekleyin, size uygun sayfaya yönlendiriliyorsunuz.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div id="loading" class="mb-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Yükleniyor...</span>
+                            </div>
+                            <p class="mt-2">Cihaz türü belirleniyor...</p>
+                        </div>
+
+                        <div id="device-info" class="d-none">
+                            <h5>Tespit Edilen Cihaz:</h5>
+                            <p id="device-type" class="text-primary fs-4 mb-3"></p>
+                            <p class="text-muted mb-3">3 saniye içinde yönlendirileceksiniz...</p>
+                            <div class="progress mb-3">
+                                <div id="redirect-progress" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div class="manual-links mt-4">
+                            <h6 class="mb-3">Manuel Erişim:</h6>
+                            <div class="row g-2">
+                                <div class="col-4">
+                                    <a href="android-sayfasi.html" class="btn btn-outline-success btn-sm w-100">
+                                        <i class="fab fa-android"></i><br>Android
+                                    </a>
+                                </div>
+                                <div class="col-4">
+                                    <a href="ios-sayfasi.html" class="btn btn-outline-info btn-sm w-100">
+                                        <i class="fab fa-apple"></i><br>iOS
+                                    </a>
+                                </div>
+                                <div class="col-4">
+                                    <a href="diger-cihazlar.html" class="btn btn-outline-secondary btn-sm w-100">
+                                        <i class="fas fa-desktop"></i><br>Diğer
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <small class="text-muted">
+                        <i class="fas fa-qrcode"></i> QR kod ile erişim sağlandı
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src='js/device-detection.js'></script>
+</body>
+</html>
