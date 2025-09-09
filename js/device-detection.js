@@ -16,7 +16,7 @@
                 name: 'iOS Cihaz',
                 icon: 'fab fa-apple',
                 color: 'info',
-                url: 'ios-sayfasi.html' // DÜZENLENDİ
+                url: 'https://apps.apple.com/tr/app/hava-durumu-meteoroloji/id509200200' // DÜZENLENDİ
             };
         }
 
@@ -27,7 +27,7 @@
                 name: 'Android Cihaz',
                 icon: 'fab fa-android',
                 color: 'success',
-                url: 'android-sayfasi.html' // DÜZENLENDİ
+                url: 'https://play.google.com/store/apps/details?id=tr.gov.mgm.meteorolojihavadurumu&hl=tr&pli=1' // DÜZENLENDİ
             };
         }
 
@@ -160,9 +160,9 @@ window.DeviceDetection = {
     // Cihaz türüne göre yönlendirme
     redirectByDevice: function(deviceType) {
         if (deviceType === 'Android') {
-            window.location.href = 'https://play.google.com/store/apps/details?id=tr.gov.mgm.meteorolojihavadurumu&hl=tr&pli=1.html';
+            window.location.href = 'https://play.google.com/store/apps/details?id=tr.gov.mgm.meteorolojihavadurumu&hl=tr&pli=1';
         } else if (deviceType === 'iOS') {
-            window.location.href = 'https://apps.apple.com/tr/app/hava-durumu-meteoroloji/id509200200.html';
+            window.location.href = 'https://apps.apple.com/tr/app/hava-durumu-meteoroloji/id509200200';
         } else {
             window.location.href = 'diger-cihazlar.html';
         }
