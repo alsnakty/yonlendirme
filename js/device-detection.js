@@ -160,9 +160,9 @@ window.DeviceDetection = {
     // Cihaz türüne göre yönlendirme
     redirectByDevice: function(deviceType) {
         if (deviceType === 'Android') {
-            window.location.href = 'android-sayfasi.html';
+            window.location.href = 'https://play.google.com/store/apps/details?id=tr.gov.mgm.meteorolojihavadurumu&hl=tr&pli=1.html';
         } else if (deviceType === 'iOS') {
-            window.location.href = 'ios-sayfasi.html';
+            window.location.href = 'https://apps.apple.com/tr/app/hava-durumu-meteoroloji/id509200200.html';
         } else {
             window.location.href = 'diger-cihazlar.html';
         }
